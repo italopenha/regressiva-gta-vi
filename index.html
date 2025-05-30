@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Regressiva GTA VI</title>
+</head>
+<body>
+    <div>
+        <p>Faltam</p>
+        <p><span id="dias">0</span> dias</p>
+        <p><span id="horas">0</span> horas</p>
+        <p><span id="minutos">0</span> minutos</p>
+        <p><span id="segundos">0</span> segundos</p>
+    </div>
+
+    <script>
+        function regressiva() {
+            const dataLancamento = new Date(2026, 4, 26)
+            const dataAtual = new Date()
+            const diferencaMilesegundos = dataLancamento - dataAtual
+
+            const dias = Math.floor(diferencaMilesegundos / (1000 * 60 * 60 * 24))
+            const horas = Math.floor((diferencaMilesegundos / (1000 * 60 * 60)) % 24)
+            const minutos = Math.floor((diferencaMilesegundos / (1000 * 60)) % 60)
+            const segundos = Math.floor((diferencaMilesegundos / 1000) % 60)
+
+            document.getElementById('dias').textContent = dias
+            document.getElementById('horas').textContent = horas
+            document.getElementById('minutos').textContent = minutos
+            document.getElementById('segundos').textContent = segundos
+        }
+
+        setInterval(regressiva, 1000)
+    </script>
+</body>
+</html>
