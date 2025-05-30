@@ -15,7 +15,7 @@ body {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-image: url("/imgs/Jason_and_Lucia_02_landscape.jpg");
+    background-image: url("imgs/Jason_and_Lucia_02_landscape.jpg");
 }
 
 div {
@@ -43,7 +43,7 @@ div {
     align-items: center;
     background-size: cover;
     background-position: center center; 
-    background-image: url("/imgs/Jason_and_Lucia_02_tablet.jpg");
+    background-image: url("imgs/Jason_and_Lucia_02_tablet.jpg");
   }
 }
 
@@ -62,7 +62,7 @@ div {
     justify-content: center;
     background-size: cover;
     background-position: center center;
-    background-image: url("/imgs/Jason_and_Lucia_02_phone_A.jpg");
+    background-image: url("imgs/Jason_and_Lucia_02_phone_A.jpg");
   }
 }
 
