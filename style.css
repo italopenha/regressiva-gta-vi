@@ -1,68 +1,231 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ---------- Importar fonte Pricedown ---------- */
+@font-face {
+  font-family: "Pricedown";
+  src: url("fonts/bignoodletitling/big_noodle_titling.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* ---------- Reset e base ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Pricedown", sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
 }
 
 body {
-    display: flex;
-    flex-flow: row nowrap;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-image: url("imgs/Jason_and_Lucia_02_landscape.jpg");
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
+  min-height: 100vh;
 }
 
-div {
-    margin: 30px;
-    text-shadow: 0.25em 0.25em 0.6em rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 2.9em;
-    font-weight: bold;
-    background: rgba(0, 0, 0, 0.250);
-    transition: all 0.3s ease;
+/* ---------- Header com countdown ---------- */
+.countdown-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: rgba(32, 18, 42, 0.55); /* era um gradiente opaco */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Tablets (768px até 1024px) */
-@media screen and (max-width: 1024px) and (min-width: 768px) {
-  div {
-    margin: 20px;
-    font-size: 2em;
-    padding: 15px;
-  }
+.countdown-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
 
+.countdown-label {
+  font-size: 1.8em;
+  color: #ffffff;
+  margin-bottom: 12px;
+  text-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.countdown-values {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.countdown-item span:first-child {
+  font-size: 3em;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.5);
+}
+
+.countdown-unit {
+  font-size: 1em;
+  color: #d4a5ff;
+  text-transform: lowercase;
+  margin-top: 5px;
+}
+
+/* ---------- 4K (acima de 2560px) ---------- */
+@media screen and (min-width: 2560px) {
   body {
-    flex-direction: column;
-    align-items: center;
-    background-size: cover;
-    background-position: center center; 
-    background-image: url("imgs/Jason_and_Lucia_02_tablet.jpg");
+    background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
+  }
+
+  .countdown-header {
+    padding: 15px 20px;
+  }
+
+  .countdown-label {
+    font-size: 1.9em;
+    margin-bottom: 10px;
+  }
+
+  .countdown-item span:first-child {
+    font-size: 3.2em;
+  }
+
+  .countdown-unit {
+    font-size: 1.05em;
   }
 }
 
-/* Celulares (até 767px) */
-@media screen and (max-width: 767px) {
-  div {
-    margin: 15px;
+/* ---------- 2K e Full HD (1440px até 2559px) ---------- */
+@media screen and (min-width: 1440px) and (max-width: 2559px) {
+  body {
+    background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
+  }
+
+  .countdown-header {
+    padding: 5px 20px;
+  }
+
+  .countdown-label {
+    font-size: 1.8em;
+    margin-bottom: 8px;
+  }
+
+  .countdown-item span:first-child {
+    font-size: 3em;
+  }
+
+  .countdown-unit {
+    font-size: 1em;
+  }
+}
+
+/* ---------- Desktop/Landscape (1024px até 1439px) ---------- */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  body {
+    background-image: url("imgs/Official_Cover_Art_landscape.jpg");
+  }
+
+  .countdown-header {
+    padding: 18px 20px;
+  }
+
+  .countdown-label {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+
+  .countdown-values {
+    gap: 18px;
+  }
+
+  .countdown-item span:first-child {
+    font-size: 3em;
+  }
+
+  .countdown-unit {
+    font-size: 0.95em;
+  }
+}
+
+/* ---------- Tablets (768px até 1023px) ---------- */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  body {
+    background-image: url("imgs/Official_Cover_Art_tablet.jpg");
+  }
+
+  .countdown-header {
+    padding: 18px 15px;
+  }
+
+  .countdown-label {
     font-size: 1.5em;
-    padding: 15px;
-    text-align: center;
+    margin-bottom: 10px;
   }
 
+  .countdown-values {
+    gap: 12px;
+  }
+
+  .countdown-item {
+    min-width: 80px;
+  }
+
+  .countdown-item span:first-child {
+    font-size: 2.5em;
+  }
+
+  .countdown-unit {
+    font-size: 0.9em;
+  }
+}
+
+/* ---------- Celulares em Portrait (até 767px) ---------- */
+@media screen and (max-width: 767px) {
   body {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center center;
-    background-image: url("imgs/Jason_and_Lucia_02_phone_A.jpg");
+    background-image: url("imgs/Official_Cover_Art_phone.jpg");
+  }
+
+  .countdown-header {
+    padding: 15px 12px;
+  }
+
+  .countdown-label {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+  }
+
+  .countdown-values {
+    gap: 10px;
+  }
+
+  .countdown-item {
+    min-width: 70px;
+  }
+
+  .countdown-item span:first-child {
+    font-size: 2.2em;
+  }
+
+  .countdown-unit {
+    font-size: 0.85em;
   }
 }
 
