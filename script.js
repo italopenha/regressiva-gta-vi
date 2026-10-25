@@ -37,6 +37,7 @@ function atualizarNumeros(tempoRestante) {
     elementos.horas.textContent = formatarNumero(horas)
     elementos.minutos.textContent = formatarNumero(minutos)
     elementos.segundos.textContent = formatarNumero(segundos)
+    elementos.segundosContainer.classList.toggle("is-urgent", tempoRestante <= 60_000)
 
     if (document.body.classList.contains("countdown-final") && segundos !== ultimoSegundo) {
         elementos.segundosContainer.classList.remove("tick")
