@@ -1,4 +1,4 @@
-const MODO_TESTE = true
+const MODO_TESTE = false
 const DURACAO_GLITCH = 1500
 const LIMITE_CONTAGEM_FINAL = 10_000
 
