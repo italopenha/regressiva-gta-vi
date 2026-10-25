@@ -22,7 +22,7 @@ html, body { width: 100%; min-height: 100%; }
 body {
   min-height: 100vh;
   overflow: hidden;
-  background: var(--night) url("imgs/Official_Cover_Art_ultrawide.jpg") center / cover no-repeat;
+  background: var(--night) url("imgs/Official_Cover_Art_ultrawide.jpg") center / contain no-repeat;
   color: #fff;
   font-family: "Pricedown", Impact, sans-serif;
 }
@@ -73,18 +73,85 @@ body::before {
 .countdown-screen {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  background: #13051d;
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
+.countdown-art {
+  --art-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+  background-color: #13051d;
+}
+
+.countdown-art::before,
+.countdown-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Extensão atmosférica da capa para preencher as laterais. */
+.countdown-art::before {
+  z-index: -2;
+  inset: -35px;
+  background-image:
+    linear-gradient(90deg, rgba(20, 5, 31, 0.58), rgba(20, 5, 31, 0.12) 32% 68%, rgba(20, 5, 31, 0.58)),
+    var(--art-image);
+  background-position: center;
+  background-size: cover;
+  filter: blur(24px) saturate(1.2) brightness(0.56);
+  transform: scale(1.08);
+}
+
+/* Arte principal preservada, com uma transição suave nas bordas. */
+.countdown-art::after {
+  z-index: 0;
+  width: min(76vw, 1420px);
+  height: 100%;
+  margin: auto;
+  border-left: 2px solid rgba(255, 78, 184, 0.34);
+  border-right: 2px solid rgba(141, 84, 255, 0.4);
+  clip-path: polygon(4% 0, 96% 0, 100% 6%, 100% 94%, 96% 100%, 4% 100%, 0 94%, 0 6%);
+  box-shadow: inset 20px 0 40px rgba(255, 78, 184, 0.08), inset -20px 0 40px rgba(141, 84, 255, 0.1);
+}
+
+.countdown-art-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: min(72vw, 1420px);
+  margin: 0 auto;
+  background-image: var(--art-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  clip-path: polygon(3.2% 0, 96.8% 0, 100% 5.5%, 100% 94.5%, 96.8% 100%, 3.2% 100%, 0 94.5%, 0 5.5%);
+  filter: drop-shadow(0 0 28px rgba(255, 78, 184, 0.2));
+}
+
+.countdown-art {
+  box-shadow:
+    inset 0 18px 28px rgba(8, 1, 14, 0.6),
+    inset 0 -12px 24px rgba(8, 1, 14, 0.34);
+}
+
 .countdown-header {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   z-index: 10;
+  flex: 0 0 auto;
   width: 100%;
-  padding: 22px 20px;
-  background: linear-gradient(180deg, rgba(13, 5, 23, 0.5), transparent);
+  padding: 18px 20px 20px;
+  background:
+    linear-gradient(90deg, rgba(255, 78, 184, 0.07), transparent 30% 70%, rgba(141, 84, 255, 0.08)),
+    #13051d;
   transition: inset 0.7s ease, padding 0.7s ease, background 0.7s ease;
 }
 
@@ -92,8 +159,22 @@ body::before {
   width: min(680px, calc(100vw - 40px));
   margin: 0 auto;
   padding: 14px 30px 16px;
-  border-radius: 3px;
+  border-radius: 0;
+  clip-path: polygon(3% 0, 97% 0, 100% 22%, 100% 78%, 97% 90%, 54% 90%, 50% 100%, 46% 90%, 3% 90%, 0 78%, 0 22%);
   text-align: center;
+}
+
+.countdown-container::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  z-index: 2;
+  width: 44px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--pink), transparent);
+  box-shadow: 0 0 10px rgba(255, 78, 184, 0.8);
+  transform: translateX(-50%);
 }
 
 .countdown-label {
@@ -107,11 +188,24 @@ body::before {
 .countdown-values { display: flex; flex-wrap: nowrap; justify-content: center; gap: clamp(12px, 3vw, 34px); }
 
 .countdown-item {
+  position: relative;
   display: flex;
   min-width: 92px;
   flex-direction: column;
   align-items: center;
   transition: opacity 0.35s ease, transform 0.5s ease;
+}
+
+.countdown-item + .countdown-item::before {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: calc(-1 * clamp(8px, 1.6vw, 18px));
+  width: 4px;
+  height: 4px;
+  background: var(--orange);
+  box-shadow: 0 0 9px rgba(255, 157, 66, 0.8);
+  transform: rotate(45deg);
 }
 
 .countdown-item > span:first-child {
@@ -138,6 +232,105 @@ body::before {
   text-shadow: 3px 4px 0 #572567, 0 0 22px rgba(255, 78, 184, 0.8);
 }
 
+/* Composição editorial inspirada no hero minimalista do site oficial. */
+.countdown-header {
+  padding: 20px 5vw 22px;
+  background: #10101f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.countdown-header::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 4%, var(--pink) 28%, var(--orange) 50%, var(--purple) 72%, transparent 96%);
+  opacity: 0.72;
+  filter: blur(0.4px);
+}
+
+.countdown-container {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  width: min(1080px, 100%);
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.countdown-container::before,
+.countdown-container::after { display: none; }
+
+.countdown-label {
+  margin: 0;
+  color: var(--orange);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  letter-spacing: 0.18em;
+  text-align: left;
+  text-shadow: none;
+}
+
+.countdown-values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  min-width: 0;
+  width: 100%;
+  gap: 0;
+}
+
+.countdown-item {
+  min-width: 0;
+  padding: 0 clamp(16px, 3vw, 38px);
+  border-left: 1px solid rgba(255, 255, 255, 0.17);
+}
+
+.countdown-item + .countdown-item::before { display: none; }
+
+.countdown-item > span:first-child {
+  font-size: clamp(3.2rem, 5.6vw, 5.4rem);
+  text-shadow: 4px 4px 0 rgba(117, 38, 130, 0.75);
+}
+
+.countdown-unit {
+  margin-top: 2px;
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  letter-spacing: 0.12em;
+}
+
+.countdown-art {
+  box-shadow: none;
+  background: #10101f;
+}
+
+.countdown-art::before,
+.countdown-art::after { display: none; }
+
+.countdown-art-frame {
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  background-position: center;
+  background-size: cover;
+  clip-path: none;
+  filter: none;
+}
+
+.countdown-art-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(16, 16, 31, 0.18), transparent 18% 78%, rgba(16, 16, 31, 0.22));
+}
+
 /* Últimos dez segundos */
 body.countdown-final::before {
   background: radial-gradient(circle at center, rgba(94, 25, 93, 0.15), rgba(5, 2, 12, 0.78));
@@ -145,6 +338,7 @@ body.countdown-final::before {
 }
 
 .countdown-final .countdown-header {
+  position: fixed;
   inset: 0;
   display: grid;
   place-items: center;
@@ -154,7 +348,33 @@ body.countdown-final::before {
   box-shadow: none;
 }
 
+.countdown-final .countdown-art {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.countdown-final .countdown-art::before { display: none; }
+
+.countdown-final .countdown-art::after {
+  display: none;
+}
+
+.countdown-final .countdown-art-frame {
+  width: 100%;
+  max-width: none;
+  background-size: contain;
+  clip-path: none;
+  filter: none;
+}
+
+.countdown-final .countdown-screen { background: transparent; }
+
 .countdown-final .countdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: min(800px, calc(100vw - 32px));
   padding: 0;
   border: 0;
@@ -163,11 +383,16 @@ body.countdown-final::before {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   overflow: visible;
+  clip-path: none;
 }
 
+.countdown-final .countdown-container::before,
 .countdown-final .countdown-container::after { display: none; }
 
 .countdown-final .countdown-label {
+  order: 0;
+  margin-bottom: clamp(18px, 4vh, 42px);
+  text-align: center;
   color: var(--pink);
   font-size: clamp(2rem, 5vw, 4rem);
   letter-spacing: 0.08em;
@@ -176,6 +401,12 @@ body.countdown-final::before {
 }
 
 .countdown-final .countdown-values { flex-wrap: nowrap; }
+
+.countdown-final .countdown-values {
+  order: 1;
+  display: flex;
+  width: auto;
+}
 
 .countdown-final .countdown-secondary {
   position: absolute;
@@ -346,24 +577,31 @@ body.countdown-final::before {
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
   body { background-image: url("imgs/Official_Cover_Art_landscape.jpg"); }
+  .countdown-art { --art-image: url("imgs/Official_Cover_Art_landscape.jpg"); }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   body { background-image: url("imgs/Official_Cover_Art_tablet.jpg"); }
+  .countdown-art { --art-image: url("imgs/Official_Cover_Art_tablet.jpg"); }
   .countdown-values { gap: 12px; }
   .countdown-item { min-width: 80px; }
+  .countdown-art-frame { width: 100%; background-size: contain; }
   .launch-content { width: min(680px, calc(100vw - 48px)); }
 }
 
 @media screen and (max-width: 767px) {
   body { background-image: url("imgs/Official_Cover_Art_phone.jpg"); }
+  .countdown-art { --art-image: url("imgs/Official_Cover_Art_phone.jpg"); }
   .countdown-header { padding: 14px 10px; }
-  .countdown-container { width: calc(100vw - 24px); padding: 12px 10px 14px; }
-  .countdown-label { font-size: 1.15rem; }
+  .countdown-container { grid-template-columns: minmax(0, 1fr); width: 100%; min-width: 0; padding: 0; row-gap: 8px; }
+  .countdown-label { font-size: 1.15rem; text-align: center; }
   .countdown-values { gap: 4px; }
   .countdown-item { min-width: 0; flex: 1; }
+  .countdown-item { padding-inline: 4px; }
+  .countdown-item + .countdown-item::before { display: none; }
   .countdown-item > span:first-child { font-size: clamp(2rem, 11vw, 3rem); }
   .countdown-unit { font-size: clamp(.62rem, 2.6vw, .78rem); letter-spacing: .04em; }
+  .countdown-art-frame { width: 100%; background-size: contain; clip-path: none; }
   .launch-content { width: calc(100vw - 28px); padding: 30px 16px; }
   .neon-title { font-size: clamp(2.8rem, 15vw, 4.7rem); line-height: .9; }
   .launch-kicker { font-size: clamp(1.1rem, 6vw, 1.55rem); }
