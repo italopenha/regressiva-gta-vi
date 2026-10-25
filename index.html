@@ -1,55 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#20122a">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="imgs/gtavi.ico" type="image/x-icon">
     <title>Regressiva GTA VI</title>
 </head>
 <body>
-    <header class="countdown-header">
-        <div class="countdown-container">
-            <p class="countdown-label">Faltam</p>
-            <div class="countdown-values">
-                <div class="countdown-item">
-                    <span id="dias">0</span>
-                    <span class="countdown-unit">dias</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="horas">0</span>
-                    <span class="countdown-unit">horas</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="minutos">0</span>
-                    <span class="countdown-unit">minutos</span>
-                </div>
-                <div class="countdown-item">
-                    <span id="segundos">0</span>
-                    <span class="countdown-unit">segundos</span>
+    <main id="countdown-screen" class="countdown-screen">
+        <header class="countdown-header">
+            <div class="countdown-container">
+                <p id="countdown-label" class="countdown-label">Faltam</p>
+                <div class="countdown-values" aria-label="Contagem regressiva para o lançamento">
+                    <div class="countdown-item countdown-secondary"><span id="dias">0</span><span class="countdown-unit">dias</span></div>
+                    <div class="countdown-item countdown-secondary"><span id="horas">0</span><span class="countdown-unit">horas</span></div>
+                    <div class="countdown-item countdown-secondary"><span id="minutos">0</span><span class="countdown-unit">minutos</span></div>
+                    <div class="countdown-item countdown-seconds"><span id="segundos">0</span><span class="countdown-unit">segundos</span></div>
                 </div>
             </div>
+        </header>
+    </main>
+
+    <div id="glitch-overlay" class="glitch-overlay" aria-hidden="true"></div>
+
+    <main id="launch-screen" class="launch-screen" aria-hidden="true">
+        <div class="launch-content">
+            <p class="launch-kicker">A espera acabou</p>
+            <h1>Bem-vindo de volta<br><span>a Vice City</span></h1>
+            <p class="launch-date">19 de novembro de 2026</p>
+            <a class="launch-button" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">Entrar em Vice City</a>
         </div>
-    </header>
+        <div class="neon-sun" aria-hidden="true"></div>
+        <div class="launch-grain" aria-hidden="true"></div>
+    </main>
 
-    <script>
-        function regressiva() {
-            const dataLancamento = new Date(2026, 10, 19)
-            const dataAtual = new Date()
-            const diferencaMilesegundos = dataLancamento - dataAtual
-
-            const dias = Math.floor(diferencaMilesegundos / (1000 * 60 * 60 * 24))
-            const horas = Math.floor((diferencaMilesegundos / (1000 * 60 * 60)) % 24)
-            const minutos = Math.floor((diferencaMilesegundos / (1000 * 60)) % 60)
-            const segundos = Math.floor((diferencaMilesegundos / 1000) % 60)
-
-            document.getElementById('dias').textContent = dias
-            document.getElementById('horas').textContent = horas
-            document.getElementById('minutos').textContent = minutos
-            document.getElementById('segundos').textContent = segundos
-        }
-
-        setInterval(regressiva, 1000)
-    </script>
+    <p id="launch-announcement" class="sr-only" aria-live="polite"></p>
+    <script src="script.js"></script>
 </body>
 </html>

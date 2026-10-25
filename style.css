@@ -1,231 +1,300 @@
 @charset "UTF-8";
 
-/* ---------- Importar fonte Pricedown ---------- */
 @font-face {
   font-family: "Pricedown";
-  src: url("fonts/bignoodletitling/big_noodle_titling.ttf") format("opentype");
+  src: url("fonts/bignoodletitling/big_noodle_titling.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
-/* ---------- Reset e base ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Pricedown", sans-serif;
+:root {
+  --pink: #ff4eb8;
+  --purple: #8d54ff;
+  --orange: #ff9d42;
+  --night: #12091c;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { width: 100%; min-height: 100%; }
 
 body {
-  display: flex;
-  flex-direction: column;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center center;
-  background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
   min-height: 100vh;
+  overflow: hidden;
+  background: var(--night) url("imgs/Official_Cover_Art_ultrawide.jpg") center / cover no-repeat;
+  color: #fff;
+  font-family: "Pricedown", Impact, sans-serif;
 }
 
-/* ---------- Header com countdown ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(12, 5, 20, 0.1), rgba(12, 5, 20, 0.3));
+  transition: background 0.7s ease, backdrop-filter 0.7s ease;
+}
+
+.countdown-screen {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
 .countdown-header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
   z-index: 10;
-  background: rgba(32, 18, 42, 0.55); /* era um gradiente opaco */
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(32, 18, 42, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 20px 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: inset 0.7s ease, padding 0.7s ease, background 0.7s ease;
 }
 
-.countdown-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
+.countdown-container { max-width: 1200px; margin: 0 auto; text-align: center; }
 
 .countdown-label {
-  font-size: 1.8em;
-  color: #ffffff;
-  margin-bottom: 12px;
-  text-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+  font-size: 1.8rem;
   font-weight: bold;
+  text-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.5);
+  transition: font-size 0.5s ease, color 0.5s ease;
 }
 
-.countdown-values {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+.countdown-values { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
 
 .countdown-item {
   display: flex;
+  min-width: 100px;
   flex-direction: column;
   align-items: center;
-  min-width: 100px;
+  transition: opacity 0.35s ease, transform 0.5s ease;
 }
 
-.countdown-item span:first-child {
-  font-size: 3em;
+.countdown-item > span:first-child {
+  font-size: 3rem;
   font-weight: bold;
-  color: #ffffff;
   line-height: 1;
   text-shadow: 0.15em 0.15em 0.4em rgba(0, 0, 0, 0.5);
 }
 
-.countdown-unit {
-  font-size: 1em;
-  color: #d4a5ff;
-  text-transform: lowercase;
-  margin-top: 5px;
+.countdown-unit { margin-top: 5px; color: #d4a5ff; font-size: 1rem; text-transform: lowercase; }
+
+/* Últimos dez segundos */
+body.countdown-final::before {
+  background: radial-gradient(circle at center, rgba(94, 25, 93, 0.15), rgba(5, 2, 12, 0.78));
+  backdrop-filter: saturate(1.25);
 }
 
-/* ---------- 4K (acima de 2560px) ---------- */
+.countdown-final .countdown-header {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 5, 25, 0.3);
+  border: 0;
+  box-shadow: none;
+}
+
+.countdown-final .countdown-label {
+  color: var(--pink);
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(255, 78, 184, 0.8), 0 0 34px rgba(141, 84, 255, 0.65);
+}
+
+.countdown-final .countdown-values { flex-wrap: nowrap; }
+
+.countdown-final .countdown-secondary {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.65);
+}
+
+.countdown-final .countdown-seconds { min-width: min(70vw, 400px); }
+
+.countdown-final .countdown-seconds > span:first-child {
+  color: #fff;
+  font-size: clamp(9rem, 30vw, 22rem);
+  line-height: 0.8;
+  text-shadow: 0 0 12px #fff, 0 0 38px var(--pink), 8px 8px 0 rgba(141, 84, 255, 0.5);
+}
+
+.countdown-final .countdown-seconds.tick > span:first-child {
+  animation: final-pulse 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.countdown-final .countdown-unit {
+  margin-top: 25px;
+  color: var(--orange);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes final-pulse {
+  0% { transform: scale(1.24); filter: brightness(1.8); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* Glitch da virada */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.14) 4px), linear-gradient(90deg, rgba(255,0,128,.32), rgba(0,225,255,.2));
+  mix-blend-mode: screen;
+}
+
+.launching .glitch-overlay { visibility: visible; animation: glitch-flash 1.5s steps(2, end) both; }
+.launching .countdown-screen { animation: screen-glitch 1.5s steps(2, end) both; }
+
+@keyframes glitch-flash {
+  0% { opacity: 0; clip-path: inset(0); transform: translateX(0); }
+  12% { opacity: .9; clip-path: inset(8% 0 62%); transform: translateX(-18px); }
+  24% { opacity: .15; clip-path: inset(65% 0 8%); transform: translateX(14px); }
+  38% { opacity: 1; clip-path: inset(32% 0 38%); background-color: #fff; }
+  55% { opacity: .35; clip-path: inset(76% 0 3%); transform: translateX(-10px); }
+  72% { opacity: .95; clip-path: inset(0); background-color: var(--pink); }
+  100% { opacity: 0; clip-path: inset(0); transform: translateX(0); }
+}
+
+@keyframes screen-glitch {
+  0%, 100% { opacity: 1; transform: translate(0); filter: none; }
+  18% { transform: translate(-8px, 3px); filter: hue-rotate(65deg) contrast(1.6); }
+  36% { transform: translate(10px, -2px); filter: hue-rotate(-80deg) contrast(2); }
+  58% { opacity: .45; transform: translate(-5px, 0); }
+  80% { opacity: 0; transform: scale(1.04); }
+}
+
+/* Tela permanente após o lançamento */
+.launch-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  visibility: hidden;
+  place-items: center;
+  overflow: hidden;
+  padding: 24px;
+  opacity: 0;
+  background: linear-gradient(180deg, rgba(18,5,31,.2), rgba(12,4,24,.74));
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.post-launch .countdown-screen { visibility: hidden; opacity: 0; }
+.post-launch .launch-screen { visibility: visible; opacity: 1; }
+
+.launch-content { position: relative; z-index: 3; max-width: 1000px; text-align: center; text-transform: uppercase; }
+
+.launch-kicker {
+  margin-bottom: 12px;
+  color: var(--orange);
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+  letter-spacing: .14em;
+  text-shadow: 0 0 18px rgba(255,157,66,.7);
+}
+
+.launch-content h1 {
+  font-size: clamp(3.4rem, 10vw, 8.5rem);
+  line-height: .82;
+  text-shadow: 0 5px 0 #50215f, 0 0 30px rgba(255,78,184,.48);
+}
+
+.launch-content h1 span {
+  color: var(--pink);
+  text-shadow: 0 4px 0 #6c245d, 0 0 18px rgba(255,78,184,.85), 0 0 50px rgba(141,84,255,.7);
+}
+
+.launch-date { margin: 24px 0; color: #f0d9ff; font-size: clamp(1rem, 2.2vw, 1.5rem); letter-spacing: .12em; }
+
+.launch-button {
+  display: inline-block;
+  padding: 14px 28px;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.82);
+  border-radius: 4px;
+  outline-offset: 5px;
+  background: linear-gradient(135deg, var(--pink), #8c3cf1);
+  box-shadow: 0 0 22px rgba(255,78,184,.5);
+  font-size: 1.2rem;
+  letter-spacing: .06em;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.launch-button:hover, .launch-button:focus-visible { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 36px rgba(255,78,184,.85); }
+
+.neon-sun {
+  position: absolute;
+  right: -8vw;
+  bottom: -20vw;
+  width: min(65vw, 850px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: .32;
+  background: radial-gradient(circle, var(--orange), var(--pink) 48%, transparent 70%);
+  filter: blur(15px);
+  animation: sun-breathe 5s ease-in-out infinite alternate;
+}
+
+.launch-grain { position: absolute; inset: 0; opacity: .11; background: repeating-linear-gradient(0deg, transparent 0 3px, #fff 4px); pointer-events: none; }
+.post-launch .launch-content { animation: launch-reveal 1.15s .15s cubic-bezier(.16,1,.3,1) both; }
+
+@keyframes launch-reveal {
+  from { opacity: 0; transform: translateY(35px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sun-breathe { to { transform: scale(1.08); opacity: .42; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
 @media screen and (min-width: 2560px) {
-  body {
-    background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
-  }
-
-  .countdown-header {
-    padding: 15px 20px;
-  }
-
-  .countdown-label {
-    font-size: 1.9em;
-    margin-bottom: 10px;
-  }
-
-  .countdown-item span:first-child {
-    font-size: 3.2em;
-  }
-
-  .countdown-unit {
-    font-size: 1.05em;
-  }
+  .countdown-item > span:first-child { font-size: 3.2rem; }
 }
 
-/* ---------- 2K e Full HD (1440px até 2559px) ---------- */
-@media screen and (min-width: 1440px) and (max-width: 2559px) {
-  body {
-    background-image: url("imgs/Official_Cover_Art_ultrawide.jpg");
-  }
-
-  .countdown-header {
-    padding: 5px 20px;
-  }
-
-  .countdown-label {
-    font-size: 1.8em;
-    margin-bottom: 8px;
-  }
-
-  .countdown-item span:first-child {
-    font-size: 3em;
-  }
-
-  .countdown-unit {
-    font-size: 1em;
-  }
-}
-
-/* ---------- Desktop/Landscape (1024px até 1439px) ---------- */
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
-  body {
-    background-image: url("imgs/Official_Cover_Art_landscape.jpg");
-  }
-
-  .countdown-header {
-    padding: 18px 20px;
-  }
-
-  .countdown-label {
-    font-size: 1.8em;
-    margin-bottom: 10px;
-  }
-
-  .countdown-values {
-    gap: 18px;
-  }
-
-  .countdown-item span:first-child {
-    font-size: 3em;
-  }
-
-  .countdown-unit {
-    font-size: 0.95em;
-  }
+  body { background-image: url("imgs/Official_Cover_Art_landscape.jpg"); }
 }
 
-/* ---------- Tablets (768px até 1023px) ---------- */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  body {
-    background-image: url("imgs/Official_Cover_Art_tablet.jpg");
-  }
-
-  .countdown-header {
-    padding: 18px 15px;
-  }
-
-  .countdown-label {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-
-  .countdown-values {
-    gap: 12px;
-  }
-
-  .countdown-item {
-    min-width: 80px;
-  }
-
-  .countdown-item span:first-child {
-    font-size: 2.5em;
-  }
-
-  .countdown-unit {
-    font-size: 0.9em;
-  }
+  body { background-image: url("imgs/Official_Cover_Art_tablet.jpg"); }
+  .countdown-values { gap: 12px; }
+  .countdown-item { min-width: 80px; }
+  .countdown-item > span:first-child { font-size: 2.5rem; }
 }
 
-/* ---------- Celulares em Portrait (até 767px) ---------- */
 @media screen and (max-width: 767px) {
-  body {
-    background-image: url("imgs/Official_Cover_Art_phone.jpg");
-  }
-
-  .countdown-header {
-    padding: 15px 12px;
-  }
-
-  .countdown-label {
-    font-size: 1.4em;
-    margin-bottom: 10px;
-  }
-
-  .countdown-values {
-    gap: 10px;
-  }
-
-  .countdown-item {
-    min-width: 70px;
-  }
-
-  .countdown-item span:first-child {
-    font-size: 2.2em;
-  }
-
-  .countdown-unit {
-    font-size: 0.85em;
-  }
+  body { background-image: url("imgs/Official_Cover_Art_phone.jpg"); }
+  .countdown-header { padding: 14px 10px; }
+  .countdown-label { font-size: 1.4rem; }
+  .countdown-values { gap: 8px; }
+  .countdown-item { min-width: 68px; }
+  .countdown-item > span:first-child { font-size: 2.1rem; }
+  .countdown-unit { font-size: .82rem; }
+  .launch-content h1 { line-height: .9; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .launching .glitch-overlay { display: none; }
+}
